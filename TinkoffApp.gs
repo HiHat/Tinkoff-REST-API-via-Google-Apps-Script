@@ -200,10 +200,10 @@ class TinkoffApp {
       path: "MarketDataService/GetCandles",
     });
   }
-  MarketDataGetLastPrices(figi) {
+  MarketDataGetLastPrices(figiList) {
     return this.connect({
       data: {
-        figi: [figi],
+        figi: figiList,
       },
       path: "MarketDataService/GetLastPrices",
     });
