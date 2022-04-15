@@ -23,7 +23,8 @@ function myFunction() {
   });
  
   // Используем API v2
-  var my_balance = tAPI.portfolioCurrencies(); // например, получаем валютные активы
+  let accountId = GetAccounts();
+  let my_portfolio = tAPI.GetPortfolio(accountId[0]); // получаем портфель по первому счету
 }
 ```
 
