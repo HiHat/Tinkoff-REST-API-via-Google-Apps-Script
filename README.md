@@ -1,33 +1,33 @@
 TinkoffApp
 ========
 
-Обёртка Tinkoff API на Google Apps Script
+Обёртка Tinkoff API V2 на Google Apps Script
 
 Обёртку можно использовать как в виде файла добавлемого в исходный код проекта, так и в виде подключаемой библиотеки
 
-## TinkoffApp.gs
+## TinkoffAppV2.gs
 
 ### Как использовать файл
 
-1. Добавьте содержимое файла TinkoffApp.gs в свой проект
+1. Добавьте содержимое файла TinkoffAppV2.gs в свой проект
 2. Получите API токен в [кабинете Тинькофф Инвестиции](https://www.tinkoff.ru/invest/)
 3. Пользуйтесь
 ```javascript
 function myFunction() {
 
   // Создаём API
-  var tAPI = new TinkoffApp({
+  var tAPI = new TinkoffAppV2({
     token: '1234567890', // укажите здесь свой токен
     logging: true, // Опционально - показывать в логах запросы и ответы
     mode: 'sandbox' // Опционально - для работы с песочницей
   });
  
-  // Используем API
+  // Используем API v2
   var my_balance = tAPI.portfolioCurrencies(); // например, получаем валютные активы
 }
 ```
 
-## Библиотека TinkoffApp
+## Библиотека TinkoffApp (не реализован переход на API V2!!!)
 
 ### Ключ библиотеки
 
@@ -59,54 +59,40 @@ function myFunction() {
 }
 ```
 
-#### Чуть подробнее
+#### Описание
 
-Все методы аналогичны указанным в официальной документации - https://tinkoffcreditsystems.github.io/invest-openapi/swagger-ui/
-
-Названия методов сформированы из пути обращения, с капитализацией первого символа идушего за спецсимволами, и удалением спецсимволов:
-```
-/market/search/by-ticker -> .marketSearchByTicker()
-```
-И для добавляемого кода и для библиотеки синтаксис методов одинаковый
+Все методы аналогичны указанным в официальной документации по API v2 - https://tinkoff.github.io/investAPI/swagger-ui/
 
 ##### Методы
 
-sandbox
+InstrumentsService
 ```javascript
-- .sandboxRegister() // Регистрация клиента в sandbox
-- .sandboxCurrenciesBalance(request, brokerAccountId) // Выставление баланса по валютным позициям
-- .sandboxPositionsBalance(request, brokerAccountId) // Выставление баланса по инструментным позициям
-- .sandboxRemove(brokerAccountId) // Удаление счета
-- .sandboxClear(brokerAccountId) // Удаление всех позиций
 ```
-orders
+
+MarketDataService
 ```javascript
-- .orders(brokerAccountId) // Получение списка активных заявок
-- .ordersLimitOrder(request, figi, brokerAccountId) // Создание лимитной заявки
-- .ordersMarketOrder(request, figi, brokerAccountId) // Создание рыночной заявки
-- .ordersCancel(orderId, brokerAccountId) // Отмена заявки
 ```
-portfolio
+
+OperationsService
 ```javascript
-- .portfolio(brokerAccountId) // Получение портфеля клиента
-- .portfolioCurrencies(brokerAccountId) // Получение валютных активов клиента
+- .GetPortfolio(accountId) // Получение портфеля клиента
 ```
-market
+
+OrdersService
 ```javascript
-- .marketStocks() // Получение списка акций
-- .marketBonds() // Получение списка облигаций
-- .marketEtfs() // Получение списка ETF
-- .marketCurrencies() // Получение списка валютных пар
-- .marketOrderbook(figi, depth) // Получение стакана по FIGI
-- .marketCandles(figi, from, to, interval) // Получение исторических свечей по FIGI
-- .marketSearchByFigi(figi) // Получение инструмента по FIGI
-- .marketSearchByTicker(ticker) // Получение инструмента по тикеру
+- .GetOrders(accountId) // Получение списка активных заявок по счету
 ```
-operations
+
+StopOrdersService
 ```javascript
-- .operations(from, to, figi, brokerAccountId) // Получение списка операций
 ```
-user
+
+UsersService
 ```javascript
-- .userAccounts() // Получение брокерских счетов клиента
+- .GetAccounts() // Метод получения счетов пользователя
+- .GetInfo() // Метод получения информации о пользователе
+```
+
+SandboxService
+```javascript
 ```
